@@ -1,1 +1,45 @@
 
+
+.hidden {
+  display: none;
+}
+[hidden] {
+  display: none !important;
+}
+
+#viewerContainer {
+  position: absolute;
+  overflow: auto;
+  width: 100%;
+  top: 5rem;
+  bottom: 4rem;
+  left: 0;
+  right: 0;
+}
+
+canvas {
+  margin: auto;
+  display: block;
+}
+
+.pdfViewer .page .loadingIcon {
+  width: 2.9rem;
+  height: 2.9rem;
+  background: url("images/spinner.png") no-repeat left top / 38rem ;
+  border: medium none;
+  animation: 1s steps(10, end) 0s normal none infinite moveDefault;
+  display: block;
+  position: absolute;
+  top: calc((100% - 2.9rem) / 2);
+  left: calc((100% - 2.9rem) / 2);
+}
+
+@keyframes moveDefault {
+  from {
+    background-position: 0 top;
+  }
+
+  to {
+    background-position: -39rem top;
+  }
+}

@@ -1,29 +1,29 @@
-import {Component, EventEmitter, Prop, Event, Element, ComponentWillLoad, ComponentDidLoad} from '@stencil/core';
+import {
+  Component,
+  EventEmitter,
+  Prop,
+  Event,
+  Element,
+  ComponentWillLoad,
+  ComponentDidLoad,
+  ComponentDidUpdate
+} from '@stencil/core';
 import "pdfjs-dist/";
 import "pdfjs-dist/web/pdf_viewer";
+import {PDFJSStatic} from 'pdfjs-dist';
 //https://github.com/VadimDez/ng2-pdf-viewer
+//https://jsfiddle.net/pdfjs/wagvs9Lf/?utm_source=website&utm_medium=embed&utm_campaign=wagvs9Lf
 
-declare var PDFJS: any;
-
-console.log(PDFJS.version);
-
+declare var PDFJS: PDFJSStatic | any;
 PDFJS.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.385/pdf.worker.min.js';
-
-// import { PDFJSStatic } from "pdfjs-dist";
-//
-// declare global {
-//   const PDFJS: PDFJSStatic;
-// }
-
-//import { PDFJSLinkService } from "pdfjs-dist/lib/web/pdf_link_service";
 
 @Component({
   tag: 'my-component',
   styleUrl: 'my-component.css',
   shadow: true
 })
-export class StencilPdfJs implements ComponentWillLoad, ComponentDidLoad {
-  //private CSS_UNITS: number = 96.0 / 72.0;
+export class StencilPdfJs implements ComponentWillLoad, ComponentDidLoad, ComponentDidUpdate {
+  private CSS_UNITS: number = 96.0 / 72.0;
 
   public pdfLinkService: any;
   public pdfViewer: any;
@@ -31,6 +31,9 @@ export class StencilPdfJs implements ComponentWillLoad, ComponentDidLoad {
   //private lastLoaded: string | Uint8Array | PDFSource;
   //private resizeTimeout: NodeJS.Timer;
   //private pdf;
+
+  private pdfHistory: any;
+  private l10n: any;
 
   @Prop() first: string;
   @Prop() last: string;
@@ -43,47 +46,61 @@ export class StencilPdfJs implements ComponentWillLoad, ComponentDidLoad {
   //@Event() onProgress: EventEmitter<PDFProgressData>;
   @Event() pageChange: EventEmitter<number>;
 
-  initUI() {
-    let linkService = new PDFJS.PDFLinkService();
-    this.pdfLinkService = linkService;
-
-    //this.l10n = PDFJS.NullL10n;
-    let pdfViewer = new PDFJS.PDFViewer({
-      container: this.todoListEl,
-      linkService: linkService,
-      l10n: PDFJS.NullL10n,
-      useOnlyCssZoom: true,
-      textLayerMode: 0,
-    });
-    this.pdfViewer = pdfViewer;
-    linkService.setViewer(pdfViewer);
-  }
 
   componentWillLoad() {
 
   }
 
   componentDidLoad() {
-    this.initUI();
-    //this.setupViewer();
-//@ts-ignore
-    var loadingTask = PDFJS.getDocument('assets/file.pdf');
+    // (Optionally) enable hyperlinks within PDF files.
+    let linkService = new PDFJS.PDFLinkService();
+    this.l10n = PDFJS.NullL10n;
+    let container =this.todoListEl.shadowRoot.getElementById('viewerContainer');
+    let pdfViewer = new PDFJS.PDFViewer({
+      container: container,
+      linkService: linkService,
+      l10n: this.l10n,
+      useOnlyCssZoom: true,
+      textLayerMode: 0,
+    });
+    this.pdfViewer = pdfViewer;
+    linkService.setViewer(pdfViewer);
 
-    loadingTask.onProgress = function (progressData) {
-      console.log(progressData.loaded,  progressData.total);
-    };
+    this.pdfHistory = new PDFJS.PDFHistory({
+      linkService: linkService
+    });
+    linkService.setHistory(this.pdfHistory);
 
-    loadingTask.promise.then(function (pdfDocument) {
-      // Document loaded, specifying document for the viewer.
-      this.pdfDocument = pdfDocument;
-      this.pdfViewer.setDocument(pdfDocument);
-      this.pdfLinkService.setDocument(pdfDocument);
-      this.pdfHistory.initialize(pdfDocument.fingerprint);
+    container.addEventListener('pagesinit', function () {
+      // We can use pdfViewer now, e.g. let's change default scale.
+      pdfViewer.currentScaleValue = 'page-width';
+    });
 
-      this.loadingBar.hide();
-      this.setTitleUsingMetadata(pdfDocument);
+    this.pdfViewer.currentPageNumber = 0;
+
+// Loading document.
+    PDFJS.getDocument('assets/file.pdf').then(function (pdfDocument) {
+      // Document loaded, specifying document for the viewer and
+      // the (optional) linkService.
+      pdfViewer.setDocument(pdfDocument);
+
+      linkService.setDocument(pdfDocument, null);
     });
   }
+
+  pageNext() {
+    debugger;
+    this.pdfViewer.currentPageNumber++;
+  }
+
+  pagePrev() {
+    this.pdfViewer.currentPageNumber--;
+  }
+
+  componentDidUpdate() {
+
+  }
+
   //
   // @Listen('window:resize')
   // public onPageResize() {
@@ -367,7 +384,11 @@ export class StencilPdfJs implements ComponentWillLoad, ComponentDidLoad {
   render() {
     return (
       <div>
-        Hello, World! I'm {this.first} {this.last}
+        <button onClick={() => this.pagePrev()}>Prev</button>
+        <button onClick={() => this.pageNext()}>Next</button>
+        <div id="viewerContainer">
+          <div id="viewer" class="pdfViewer"></div>
+        </div>
       </div>
     );
   }
