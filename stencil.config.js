@@ -1,5 +1,5 @@
 exports.config = {
-  namespace: 'mycomponent',
+  namespace: 'stencil-pdfjs',
   generateDistribution: true,
   serviceWorker: false
 };

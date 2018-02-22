@@ -1,16 +1,16 @@
 import { flush, render } from '@stencil/core/testing';
-import { MyComponent } from './my-component';
+import { StencilPdfJs } from './my-component';
 
 describe('my-component', () => {
   it('should build', () => {
-    expect(new MyComponent()).toBeTruthy();
+    expect(new StencilPdfJs()).toBeTruthy();
   });
 
   describe('rendering', () => {
     let element;
     beforeEach(async () => {
       element = await render({
-        components: [MyComponent],
+        components: [StencilPdfJs],
         html: '<my-component></my-component>'
       });
     });

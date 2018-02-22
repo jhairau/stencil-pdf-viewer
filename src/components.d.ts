@@ -15,7 +15,7 @@ declare global {
 
 
 import {
-  MyComponent as MyComponent
+  StencilPdfJs as MyComponent
 } from './components/my-component/my-component';
 
 declare global {
@@ -38,8 +38,17 @@ declare global {
   }
   namespace JSXElements {
     export interface MyComponentAttributes extends HTMLAttributes {
+      autoResize?: boolean;
+      canAutoResize?: boolean;
+      externalLinkTarget?: string;
       first?: string;
+      fitToPage?: boolean;
       last?: string;
+      originalSize?: boolean;
+      rotation?: 0 | 90 | 180 | 270 | 360;
+      showAll?: boolean;
+      stickToPage?: boolean;
+      zoom?: number;
     }
   }
 }
