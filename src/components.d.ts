@@ -15,40 +15,31 @@ declare global {
 
 
 import {
-  StencilPdfJs as MyComponent
-} from './components/my-component/my-component';
+  StencilPdfJs as JhPdfViewer
+} from './components/jh-pdf-viewer/jh-pdf-viewer';
 
 declare global {
-  interface HTMLMyComponentElement extends MyComponent, HTMLStencilElement {
+  interface HTMLJhPdfViewerElement extends JhPdfViewer, HTMLStencilElement {
   }
-  var HTMLMyComponentElement: {
-    prototype: HTMLMyComponentElement;
-    new (): HTMLMyComponentElement;
+  var HTMLJhPdfViewerElement: {
+    prototype: HTMLJhPdfViewerElement;
+    new (): HTMLJhPdfViewerElement;
   };
   interface HTMLElementTagNameMap {
-    "my-component": HTMLMyComponentElement;
+    "jh-pdf-viewer": HTMLJhPdfViewerElement;
   }
   interface ElementTagNameMap {
-    "my-component": HTMLMyComponentElement;
+    "jh-pdf-viewer": HTMLJhPdfViewerElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "my-component": JSXElements.MyComponentAttributes;
+      "jh-pdf-viewer": JSXElements.JhPdfViewerAttributes;
     }
   }
   namespace JSXElements {
-    export interface MyComponentAttributes extends HTMLAttributes {
-      autoResize?: boolean;
-      canAutoResize?: boolean;
-      externalLinkTarget?: string;
-      first?: string;
-      fitToPage?: boolean;
-      last?: string;
-      originalSize?: boolean;
+    export interface JhPdfViewerAttributes extends HTMLAttributes {
       rotation?: 0 | 90 | 180 | 270 | 360;
-      showAll?: boolean;
-      stickToPage?: boolean;
-      zoom?: number;
+      src?: string;
     }
   }
 }

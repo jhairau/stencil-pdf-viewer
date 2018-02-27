@@ -1,7 +1,7 @@
 import { flush, render } from '@stencil/core/testing';
-import { StencilPdfJs } from './my-component';
+import { StencilPdfJs } from './jh-pdf-viewer';
 
-describe('my-component', () => {
+describe('jh-pdf-viewer', () => {
   it('should build', () => {
     expect(new StencilPdfJs()).toBeTruthy();
   });
@@ -11,7 +11,7 @@ describe('my-component', () => {
     beforeEach(async () => {
       element = await render({
         components: [StencilPdfJs],
-        html: '<my-component></my-component>'
+        html: '<jh-pdf-viewer></jh-pdf-viewer>'
       });
     });
 
