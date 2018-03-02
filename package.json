@@ -1,6 +1,7 @@
 {
   "name": "stencil-pdfjs",
   "version": "0.0.1",
+  "private": true,
   "description": "Stencil PDF.js Component",
   "main": "dist/stencil-pdfjs.js",
   "types": "dist/types/index.d.ts",
@@ -18,9 +19,9 @@
     "test.watch": "jest --watch --no-cache"
   },
   "dependencies": {
-    "@stencil/core": "^0.6.1",
-    "pdfjs-dist": "^2.0.385",
-    "save": "^2.3.2"
+    "@stencil/core": "^0.6.12",
+    "@stencil/sass": "0.0.3",
+    "pdfjs-dist": "^2.0.385"
   },
   "devDependencies": {
     "@stencil/dev-server": "latest",
