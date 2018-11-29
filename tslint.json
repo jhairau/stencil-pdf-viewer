@@ -1,0 +1,20 @@
+// tslint 5.8.0
+// tslint-react 3.4.0
+{
+  "extends": "tslint-config-airbnb",
+  "lintOptions": {
+    "typeCheck": true
+  },
+  "linterOptions": {
+    "exclude": [
+      "./src/components.d.ts"
+    ]
+  },
+  "rules": {
+    "trailing-comma": false,
+    "max-line-length": [
+      true,
+      120
+    ]
+  }
+}
