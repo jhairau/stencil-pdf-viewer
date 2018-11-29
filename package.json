@@ -1,56 +1,45 @@
 {
-  "name": "stencil-pdfjs",
+  "name": "jh-pdf-viewer",
   "version": "0.0.1",
-  "private": true,
-  "description": "Stencil PDF.js Component",
-  "main": "dist/stencil-pdfjs.js",
-  "types": "dist/types/index.d.ts",
+  "description": "StencilJs PDF Viewer",
+  "module": "dist/esm/index.js",
+  "main": "dist/index.js",
+  "unpkg": "dist/jh-pdf-viewer.js",
+  "types": "dist/types/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "files": [
     "dist/"
   ],
-  "browser": "dist/stencil-pdfjs.js",
   "scripts": {
-    "build": "stencil build",
-    "dev": "sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\" ",
-    "serve": "stencil-dev-server",
-    "start": "npm run dev",
-    "test": "jest --no-cache",
-    "test.watch": "jest --watch --no-cache"
+    "build": "stencil build --docs",
+    "start": "stencil build --dev --watch --serve",
+    "test": "stencil test --spec --e2e",
+    "test.watch": "stencil test --spec --e2e --watchAll",
+    "lint:ts": "tslint -p tsconfig.json -c tslint.json",
+    "lint:styles": "stylelint \"src/**/*.{css,scss,less,pcss}\" --cache --cache-location \"./.stylelint-cache\"",
+    "test:jest": "jest --no-cache --verbose",
+    "test:ktes:watch": "jest --watch --no-cache --verbose"
   },
   "dependencies": {
-    "@stencil/core": "^0.6.12",
-    "@stencil/sass": "0.0.3",
-    "pdfjs-dist": "^2.0.385"
+    "pdfjs-dist": "2.0.943"
   },
   "devDependencies": {
-    "@stencil/dev-server": "latest",
-    "@stencil/utils": "latest",
-    "@types/jest": "^21.1.1",
+    "@stencil/core": "~0.15.2",
+    "@types/jest": "22.1.1",
     "@types/pdfjs-dist": "^0.1.2",
-    "jest": "^21.2.1"
+    "http-server": "^0.11.1",
+    "jest": "22.2.1",
+    "postcss": "6.0.17",
+    "postcss-calc": "6.0.1",
+    "postcss-cssnext": "3.1.0",
+    "postcss-import": "11.0.0",
+    "postcss-reporter": "5.0.0",
+    "postcss-url": "7.3.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "stylelint": "8.4.0",
+    "tslint": "5.9.1",
+    "tslint-config-airbnb": "^5.11.1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ionic-team/stencil-component-starter.git"
-  },
-  "author": "Ionic Team",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ionic-team/stencil"
-  },
-  "homepage": "https://github.com/ionic-team/stencil",
-  "jest": {
-    "transform": {
-      "^.+\\.(ts|tsx)$": "<rootDir>/node_modules/@stencil/core/testing/jest.preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(tsx?|jsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "json",
-      "jsx"
-    ]
-  }
+  "license": "MIT"
 }

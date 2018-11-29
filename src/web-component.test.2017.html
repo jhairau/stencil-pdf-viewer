@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
+    <title>Testing Stencil and PDF JS</title>
+    <script src="../dist/jh-pdf-viewer.js"></script>
+    <script type="module">
+      import { defineCustomElements } from '../dist/esm/es2017/jh-pdf-viewer.define.js';
+      defineCustomElements(window);
+    </script>
+    <style>
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+      }
+
+      jh-pdf-viewer {
+        width: 800px;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <jh-pdf-viewer></jh-pdf-viewer>
+  </body>
+</html>

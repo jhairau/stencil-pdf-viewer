@@ -10,8 +10,13 @@ log.txt
 *.sublime-project
 *.sublime-workspace
 
-.idea/
-.vscode/
+# IDEs
+.idea/dictionaries/
+.idea/**/workspace.xml
+.idea/**/usage.statistics.xml
+.idea/**/tasks.xml
+*.sublime-project
+*.sublime-workspace
 .sass-cache/
 .versions/
 node_modules/

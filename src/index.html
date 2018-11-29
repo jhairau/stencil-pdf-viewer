@@ -3,19 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
-  <title>Stencil Component Starter</title>
-  <script src="/build/stencil-pdfjs.js"></script>
+  <title>Testing Stencil and PDF JS</title>
+  <script src="/build/jh-pdf-viewer.js"></script>
   <style>
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+    }
+
     jh-pdf-viewer {
-      width: 100px;
+      width: 800px;
       display: block;
     }
   </style>
-
 </head>
 <body>
-
   <jh-pdf-viewer src="assets/file.pdf"></jh-pdf-viewer>
-
 </body>
 </html>
