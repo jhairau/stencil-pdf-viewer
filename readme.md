@@ -7,3 +7,13 @@ PDF Viewer web component built using [Stencil](https://stenciljs.com)
 - [TypeScript](https://www.typescriptlang.org)
 
 ## Installation
+```
+git clone git@github.com:jhairau/stencil-pdf-viewer.git
+cd stencil-pdf-viewer
+npm install
+```
+
+## Running
+```
+npm run start
+```

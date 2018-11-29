@@ -16,9 +16,7 @@
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
     "lint:ts": "tslint -p tsconfig.json -c tslint.json",
-    "lint:styles": "stylelint \"src/**/*.{css,scss,less,pcss}\" --cache --cache-location \"./.stylelint-cache\"",
-    "test:jest": "jest --no-cache --verbose",
-    "test:ktes:watch": "jest --watch --no-cache --verbose"
+    "lint:styles": "stylelint \"src/**/*.{css,scss,less,pcss}\" --cache --cache-location \"./.stylelint-cache\""
   },
   "dependencies": {
     "pdfjs-dist": "2.0.943"
