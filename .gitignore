@@ -15,8 +15,6 @@ log.txt
 .idea/**/workspace.xml
 .idea/**/usage.statistics.xml
 .idea/**/tasks.xml
-*.sublime-project
-*.sublime-workspace
 .sass-cache/
 .versions/
 node_modules/
@@ -27,3 +25,4 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 .env
 www/
+/loader/

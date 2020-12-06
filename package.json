@@ -2,8 +2,9 @@
   "name": "jh-pdf-viewer",
   "version": "0.0.1",
   "description": "StencilJs PDF Viewer",
-  "module": "dist/esm/index.js",
-  "main": "dist/index.js",
+  "target": "es6",
+  "module": "./dist/custom-elements/index.js",
+  "main": "./dist/index.cjs.js",
   "unpkg": "dist/jh-pdf-viewer.js",
   "types": "dist/types/components.d.ts",
   "collection": "dist/collection/collection-manifest.json",
@@ -15,29 +16,17 @@
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
-    "lint:ts": "tslint -p tsconfig.json -c tslint.json",
-    "lint:styles": "stylelint \"src/**/*.{css,scss,less,pcss}\" --cache --cache-location \"./.stylelint-cache\""
+    "lint:ts": "tslint -p tsconfig.json -c tslint.json"
   },
   "dependencies": {
-    "pdfjs-dist": "2.0.943"
+    "pdfjs-dist": "2.5.207"
   },
   "devDependencies": {
-    "@stencil/core": "~0.15.2",
-    "@types/jest": "22.1.1",
-    "@types/pdfjs-dist": "^0.1.2",
-    "http-server": "^0.11.1",
-    "jest": "22.2.1",
-    "postcss": "6.0.17",
-    "postcss-calc": "6.0.1",
-    "postcss-cssnext": "3.1.0",
-    "postcss-import": "11.0.0",
-    "postcss-reporter": "5.0.0",
-    "postcss-url": "7.3.0",
-    "rollup-plugin-node-builtins": "^2.1.2",
-    "rollup-plugin-node-globals": "^1.4.0",
-    "stylelint": "8.4.0",
-    "tslint": "5.9.1",
-    "tslint-config-airbnb": "^5.11.1"
+    "@stencil/core": "~2.3.0",
+    "@types/jest": "26.0.16",
+    "@types/pdfjs-dist": "^2.1.6",
+    "jest": "26.6.3",
+    "rollup-plugin-node-polyfills": "^0.2.1"
   },
   "license": "MIT"
 }
