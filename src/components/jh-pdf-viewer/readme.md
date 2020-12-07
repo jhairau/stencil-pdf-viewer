@@ -7,54 +7,41 @@
 
 ## Properties
 
-| Property   | Attribute  | Description                                | Type                           |
-| ---------- | ---------- | ------------------------------------------ | ------------------------------ |
-| `rotation` | `rotation` | Rotate the PDF in degrees {number}         | `0 \| 180 \| 270 \| 360 \| 90` |
-| `src`      | `src`      | Src of the PDF to load and render {number} | `string`                       |
+| Property   | Attribute  | Description                                | Type                           | Default     |
+| ---------- | ---------- | ------------------------------------------ | ------------------------------ | ----------- |
+| `rotation` | `rotation` | Rotate the PDF in degrees {number}         | `0 \| 180 \| 270 \| 360 \| 90` | `0`         |
+| `src`      | `src`      | Src of the PDF to load and render {number} | `string`                       | `undefined` |
 
 
 ## Events
 
-| Event          | Detail | Description |
-| -------------- | ------ | ----------- |
-| `onError`      | any    |             |
-| `pageChange`   | number |             |
-| `pageRendered` | number |             |
+| Event          | Description | Type                  |
+| -------------- | ----------- | --------------------- |
+| `pageChange`   |             | `CustomEvent<number>` |
+| `pageRendered` |             | `CustomEvent<number>` |
 
 
 ## Methods
 
-### `pageNext(e: MouseEvent) => void`
+### `pageNext(e: MouseEvent) => Promise<void>`
 
 Page forward
 {MouseEvent} e
 
-#### Parameters
-
-| Name | Type         | Description |
-| ---- | ------------ | ----------- |
-| `e`  | `MouseEvent` |             |
-
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 
-### `pagePrev(e: MouseEvent) => void`
+### `pagePrev(e: MouseEvent) => Promise<void>`
 
 Page backward
 e
 
-#### Parameters
-
-| Name | Type         | Description |
-| ---- | ------------ | ----------- |
-| `e`  | `MouseEvent` |             |
-
 #### Returns
 
-Type: `void`
+Type: `Promise<void>`
 
 
 

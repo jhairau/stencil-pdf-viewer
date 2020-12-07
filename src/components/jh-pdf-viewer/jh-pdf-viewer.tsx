@@ -1,13 +1,6 @@
-import {
-  Component,
-  ComponentDidLoad,
-  Element,
-  Event,
-  EventEmitter,
-  Method,
-  Prop,
-  Watch
-} from '@stencil/core';
+import { Component, Prop, Element, Method, Watch, Event, EventEmitter, Host, h } from '@stencil/core';
+// import { format } from '../../utils/utils';
+
 import {
   PDFDocumentProxy,
   PDFPageProxy,
@@ -16,9 +9,9 @@ import {
   PDFRenderTask
 } from 'pdfjs-dist';
 import pdf from 'pdfjs-dist/build/pdf';
-import 'pdfjs-dist/web/pdf_viewer';
+// import 'pdfjs-dist/web/pdf_viewer';
 
-pdf.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.worker.min.js';
+pdf.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.5.207/pdf.worker.min.js';
 
 /**
  * PDF Viewing component
@@ -28,8 +21,9 @@ pdf.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.
   styleUrl: 'jh-pdf-viewer.css',
   shadow: true
 })
-export class StencilPdfJs implements ComponentDidLoad {
-  @Element() public component: HTMLElement;
+
+export class StencilPdfJs {
+  @Element() component: HTMLElement;
 
   private isPageRendering: boolean;
   private pdfDocument: any;
@@ -47,21 +41,22 @@ export class StencilPdfJs implements ComponentDidLoad {
    * Rotate the PDF in degrees
    * {number}
    */
-  @Prop() public rotation: 0 | 90 | 180 | 270 | 360 = 0;
+  @Prop() rotation: 0 | 90 | 180 | 270 | 360 = 0;
 
   /**
    * Src of the PDF to load and render
    * {number}
    */
-  @Prop() public src: string;
+  @Prop() src: string;
 
   /**
    * Listen for changes to src
    * @param newValue
    * @param oldValue
    */
+
   @Watch('src')
-  public doSrc(newValue: string | null, oldValue: string | null): void {
+  doSrc(newValue: string | null, oldValue: string | null): void {
     if (newValue === oldValue) {
       return;
     }
@@ -71,9 +66,9 @@ export class StencilPdfJs implements ComponentDidLoad {
   //
   // --- Event Emitters --- //
   //
-  @Event() public pageRendered: EventEmitter<number>;
-  @Event() public onError: EventEmitter<any>;
-  @Event() public pageChange: EventEmitter<number>;
+  @Event() pageRendered: EventEmitter<number>;
+  // @Event() error: EventEmitter<any>;
+  @Event() pageChange: EventEmitter<number>;
 
   //
   // --- Methods --- //
@@ -84,7 +79,7 @@ export class StencilPdfJs implements ComponentDidLoad {
    * {MouseEvent} e
    */
   @Method()
-  public pageNext(e: MouseEvent): void {
+  async pageNext(e: MouseEvent) {
     e.preventDefault();
 
     if (this.pageNum >= this.pdfDocument.numPages) {
@@ -99,7 +94,7 @@ export class StencilPdfJs implements ComponentDidLoad {
    * e
    */
   @Method()
-  public pagePrev(e: MouseEvent): void {
+  async pagePrev(e: MouseEvent) {
     e.preventDefault();
 
     if (this.pageNum <= 1) {
@@ -114,14 +109,14 @@ export class StencilPdfJs implements ComponentDidLoad {
    * Render the page based on pageNumber
    * {number} pageNumber
    */
-  public renderPage(pageNumber: number): void {
+  renderPage(pageNumber: number): void {
     this.isPageRendering = true;
 
     this.pdfDocument
       .getPage(pageNumber)
       .then(
         (page: PDFPageProxy) => {
-          const viewport: PDFPageViewport = page.getViewport(this.scale, this.rotation);
+          const viewport: PDFPageViewport = page.getViewport({scale:this.scale, rotation:this.rotation});
           this.canvas.height = viewport.height;
           this.canvas.width = viewport.width;
 
@@ -135,7 +130,7 @@ export class StencilPdfJs implements ComponentDidLoad {
           const renderTask: PDFRenderTask = page.render(renderContext);
 
           // Wait for rendering to finish
-          renderTask
+          renderTask.promise
             .then(
               () => {
                 this.isPageRendering = false;
@@ -161,7 +156,7 @@ export class StencilPdfJs implements ComponentDidLoad {
     }
   }
 
-  public componentDidLoad(): void {
+  componentDidLoad(): void {
     this.canvas = this.component.shadowRoot.getElementById('pdf-canvas') as HTMLCanvasElement;
     this.ctx = this.canvas.getContext('2d');
 
@@ -172,20 +167,20 @@ export class StencilPdfJs implements ComponentDidLoad {
 
   private loadAndRender(src: string): void {
     pdf
-      .getDocument(src)
+      .getDocument(src).promise
       .then((pdfDocument: PDFDocumentProxy) => {
         this.pdfDocument = pdfDocument;
         this.renderPage(this.pageNum);
       });
   }
 
-  public render(): JSX.Element {
+  render() {
     return (
-      <div>
+      <Host>
         <button onClick={this.pagePrev.bind(this)}>Prev</button>
         <button onClick={this.pageNext.bind(this)}>Next</button>
-        <canvas id="pdf-canvas"/>
-      </div>
+        <canvas id="pdf-canvas" />
+      </Host>
     );
   }
 }
