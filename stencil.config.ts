@@ -1,6 +1,7 @@
 import { Config } from '@stencil/core';
 
 import nodePolyfills from 'rollup-plugin-node-polyfills';
+import nodeGlobals from 'rollup-plugin-node-globals';
 
 export const config: Config = {
   namespace: 'jh-pdf-viewer',
@@ -30,7 +31,8 @@ export const config: Config = {
     ],
     after: [
       // Plugins injected after commonjs()
-      nodePolyfills()
+      nodePolyfills(),
+      nodeGlobals()
     ]
   }
 };
